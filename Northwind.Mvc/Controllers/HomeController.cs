@@ -24,7 +24,7 @@ namespace Northwind.Mvc.Controllers
             Categories: db.Categories.ToList(), 
             Products: db.Products.ToList()
             );
-
+            //daada
             _logger.LogError("This is a serious error (not really!)");
             _logger.LogWarning("This is your first warning!");
             _logger.LogWarning("Second warning!");
