@@ -21,10 +21,10 @@ namespace Northwind.Mvc.Controllers
             HomeIndexViewModel model = new
             (
             VisitorCount: Random.Shared.Next(1, 1001),
-            Categories: db.Categories.ToList(), 
+            Categories: db.Categories.ToList(),
             Products: db.Products.ToList()
             );
-            //daadaaa
+
             _logger.LogError("This is a serious error (not really!)");
             _logger.LogWarning("This is your first warning!");
             _logger.LogWarning("Second warning!");
@@ -42,6 +42,22 @@ namespace Northwind.Mvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult ProductDetail(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("You must pass a product ID in the route, for example, / Home / ProductDetail / 21");
+            }
+
+            Product? model = db.Products.SingleOrDefault(p => p.ProductId == id);
+            if (model is null)
+            {
+                return NotFound($"ProductId {id} not found.");
+            }
+
+            return View(model); // pass model to view and then return result
         }
     }
 }
